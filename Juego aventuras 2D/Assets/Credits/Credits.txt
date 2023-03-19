@@ -1,0 +1,8 @@
+Credits to:
+sprites:
+- @nyk_nck for the sprites of ice spell. https://nyknck.itch.io/ https://nyknck.itch.io/ice-shard
+
+sound
+- bart (opengameart.org) for freezing sound effect. (ice and coldsnap)https://opengameart.org/content/ice-spells
+- https://www.soundjay.com/ice-sound-effect.html for ice-hit-ground-01
+- https://mixkit.co/free-sound-effects/spell/ for charge_magic_sound (original name and tone: mixkit-icicles-spell-whoosh-881.wav)

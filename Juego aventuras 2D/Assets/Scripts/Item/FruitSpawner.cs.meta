@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: ba1732e57c6095f4f8fef9014739ea5b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - fruitPrefab: {fileID: 8299475309346341922, guid: b5b79b28094a7c24abb9251a8bbfa97d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
