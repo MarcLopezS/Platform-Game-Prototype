@@ -726,7 +726,7 @@ PrefabInstance:
     - target: {fileID: 1800152624898906499, guid: 02a9048ba6e1ab941b6b5bf7f3d74ae1, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1649485387}
+      objectReference: {fileID: 2049691192}
     - target: {fileID: 1800152624898906500, guid: 02a9048ba6e1ab941b6b5bf7f3d74ae1, type: 3}
       propertyPath: m_Name
       value: Slime (1)
@@ -37927,11 +37927,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2109155081818119214, guid: b43acd5674280ae419a95077d0e7fd25, type: 3}
   m_PrefabInstance: {fileID: 20452715}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1649485387 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8999614874968880282, guid: c6fb38f948f95a34eadf00b19fed8fab, type: 3}
-  m_PrefabInstance: {fileID: 8999614873386504913}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1706826173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3741318597587762086, guid: 28fb993b2696f344cbeb03894ceb145c, type: 3}
@@ -38177,6 +38172,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &2049691192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8999614874968880280, guid: c6fb38f948f95a34eadf00b19fed8fab, type: 3}
+  m_PrefabInstance: {fileID: 8999614873386504913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &43181591004147661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38309,7 +38309,7 @@ PrefabInstance:
     - target: {fileID: 1800152624898906499, guid: 02a9048ba6e1ab941b6b5bf7f3d74ae1, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1649485387}
+      objectReference: {fileID: 2049691192}
     - target: {fileID: 1800152624898906499, guid: 02a9048ba6e1ab941b6b5bf7f3d74ae1, type: 3}
       propertyPath: distanceDetection
       value: 200

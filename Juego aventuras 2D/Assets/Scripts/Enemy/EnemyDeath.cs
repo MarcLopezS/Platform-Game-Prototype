@@ -5,14 +5,15 @@ using UnityEngine;
 public class EnemyDeath : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float bouncePlayer;
     private Animator animEnemyDeath;
     private Rigidbody2D enemy_rb;
+    private GameObject enemyParent;
 
     private void Start()
     {
         enemy_rb = transform.parent.gameObject.GetComponent<Rigidbody2D>();
         animEnemyDeath = transform.parent.gameObject.GetComponent<Animator>();
+        enemyParent = transform.parent.gameObject;
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {

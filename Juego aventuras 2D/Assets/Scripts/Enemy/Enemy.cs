@@ -7,10 +7,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] int enemyLife;
     [SerializeField] float resetStateTime;
     [SerializeField] float speed;
+    
     public state enemyState;
     public AIState ai_state;
 
-    public Rigidbody2D rb;
+    internal Rigidbody2D rb;
+    protected float prevSpeedAnimation;
 
     public enum state
     {

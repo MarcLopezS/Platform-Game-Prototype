@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Slime : Enemy
 {
-    [SerializeField] Transform player;
+    [SerializeField] GameObject player;
     [SerializeField] float distanceDetection;
     [SerializeField] Sprite[] frozenSpriteArray;
+    float speedBouncePlayer;
     SpriteRenderer sp2d;
     Animator anim;
-    float prevSpeedAnimation;
+
+    Rigidbody2D slimeRB;
     
 
     private void Start()
@@ -17,6 +19,10 @@ public class Slime : Enemy
         sp2d = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         prevSpeedAnimation = anim.speed;
+        slimeRB = GetComponent<Rigidbody2D>();
+        speedBouncePlayer = 15f;
+
+
     }
     internal override void stateMachine()
     {
@@ -27,7 +33,7 @@ public class Slime : Enemy
     {
         Debug.Log("idling");
         base.IdleUpdate();
-        if (Vector2.Distance(transform.position, player.position) < distanceDetection)
+        if (Vector2.Distance(transform.position, player.transform.position) < distanceDetection)
             ai_state = AIState.Attack;
 
     }
@@ -37,21 +43,28 @@ public class Slime : Enemy
         Debug.Log("attack ");
         base.AttackUpdate();
         
-        float direction = player.position.x - transform.position.x;
+        float direction = player.transform.position.x - transform.position.x;
         
         sp2d.flipX = direction > 0f ? true : false;
         
         direction = Mathf.Clamp(direction,-1,1);
-        rb.velocity = new Vector2(direction * getSpeed(), rb.velocity.y);  
+        slimeRB.velocity = new Vector2(direction * getSpeed(), slimeRB.velocity.y);  
 
 
-        if (Vector2.Distance(transform.position, player.position) >= distanceDetection)
+        if (Vector2.Distance(transform.position, player.transform.position) >= distanceDetection)
             ai_state = AIState.Idle;
     }
 
     internal override void DeadUpdate()
     {
         base.DeadUpdate();
+        anim.speed = prevSpeedAnimation;
+
+        slimeRB.constraints = RigidbodyConstraints2D.FreezeAll;
+        anim.SetTrigger("death");
+        gameObject.GetComponent<AudioSource>().Play();
+        playerBounce(player.gameObject);
+        Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
     internal override void changeFrozenSprite()
@@ -65,6 +78,20 @@ public class Slime : Enemy
     {
         base.returnNormalSprite();
         anim.speed = prevSpeedAnimation;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            DeadUpdate();
+        }
+    }
+
+    public void playerBounce(GameObject player)
+    {
+        Debug.Log("Entra en Bounce");
+        player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, speedBouncePlayer);
     }
 
 }
