@@ -38,6 +38,6 @@ public class CheckpointController : MonoBehaviour
     private IEnumerator freezePlayer(GameObject player, float timer)
     {
         yield return new WaitForSeconds(timer);
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        player.GetComponent<PlayerMovement>().setFreezePlayer(true);
     }
 }

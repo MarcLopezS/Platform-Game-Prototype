@@ -107,7 +107,9 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(time);
         returnNormalSprite();
         enemyState = state.Normal;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
+
     }
 
     private void Update()

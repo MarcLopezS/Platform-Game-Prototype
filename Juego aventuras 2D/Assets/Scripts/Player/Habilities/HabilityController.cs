@@ -33,6 +33,7 @@ public class HabilityController : MonoBehaviour
             
             anim.SetBool("castingSpell", true);
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            GetComponent<PlayerMovement>().setFreezePlayer(true);
 
             float direction = sr_player.flipX ? -1 : 1;
             Vector2 position = new Vector2(transform.position.x + 2*direction, transform.position.y);
@@ -44,6 +45,7 @@ public class HabilityController : MonoBehaviour
 
             chargeMagic.GetComponent<ChargeMagicController>().player = gameObject;
 
+            //when there is more than one proyectile skill
             /*switch (proyectile.GetComponent<ProyectileData>().GetProyectileType())
             {
                 case ProyectileData.ProyectileType.Ice:

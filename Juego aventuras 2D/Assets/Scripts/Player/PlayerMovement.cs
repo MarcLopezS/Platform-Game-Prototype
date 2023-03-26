@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private AudioSource jumpSound;
 
+    private bool freezePlayer;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,12 +26,14 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sp2d = GetComponent<SpriteRenderer>();
         bc2d = GetComponent<BoxCollider2D>();
+        freezePlayer = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if(rb.constraints != (RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation))
+        //checks if player can move
+        if(!freezePlayer)
         {
             dirX = Input.GetAxisRaw("Horizontal");
         }
@@ -95,4 +99,15 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(bc2d.bounds.center, bc2d.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
     }
+
+    public bool getFreezePlayer()
+    {
+        return freezePlayer;
+    }
+
+    public void setFreezePlayer(bool isFrozen)
+    {
+        freezePlayer = isFrozen;
+    }
+
 }
