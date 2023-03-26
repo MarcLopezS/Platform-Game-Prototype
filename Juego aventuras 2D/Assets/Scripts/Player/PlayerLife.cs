@@ -13,13 +13,14 @@ public class PlayerLife : MonoBehaviour
 
     [SerializeField] private AudioSource deathSound;
 
-    private static int lifes = 3;
+    private const int MAX_LIVES = 3;
+    private static int lives = MAX_LIVES;
 
     void Start()
     {
         animatorDeath = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
-        lifeTxt.text = "X " + lifes;
+        lifeTxt.text = "X " + lives;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -29,10 +30,10 @@ public class PlayerLife : MonoBehaviour
             deathSound.Play();
             Death();
 
-            if(lifes > 0)
+            if (lives > 0)
             {
-                lifes--;
-                lifeTxt.text = "X " + lifes;
+                lives--;
+                lifeTxt.text = "X " + lives;
             }
             else
             {
@@ -45,7 +46,7 @@ public class PlayerLife : MonoBehaviour
     {
         rb2d.bodyType = RigidbodyType2D.Static;
 
-        animatorDeath.SetBool("death",true);
+        animatorDeath.SetBool("death", true);
     }
 
     private void ReloadLevel()
@@ -55,6 +56,13 @@ public class PlayerLife : MonoBehaviour
 
     private void GameOver()
     {
+        resetLives();
         SceneManager.LoadScene(4);
     }
+
+    public void resetLives()
+    {
+        lives = MAX_LIVES;
+    }
+
 }
