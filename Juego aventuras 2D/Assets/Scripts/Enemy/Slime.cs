@@ -10,6 +10,7 @@ public class Slime : Enemy
     float speedBouncePlayer;
     SpriteRenderer sp2d;
     Animator anim;
+    float timeAnimation;
 
     Rigidbody2D slimeRB;
     
@@ -71,12 +72,16 @@ public class Slime : Enemy
     {
         base.changeFrozenSprite();
         anim.speed = 0;
+        timeAnimation = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        anim.Play("Freeze",0,timeAnimation);
+
         //string numberNormalSprite = sp2d.sprite.name.Substring(sp2d.sprite.name.Length - 1);
         //sp2d.sprite = frozenSpriteArray[int.Parse(numberNormalSprite)];
     }
     internal override void returnNormalSprite()
     {
         base.returnNormalSprite();
+        anim.Play("Idle", 0, timeAnimation);
         anim.speed = prevSpeedAnimation;
     }
 
