@@ -56,11 +56,10 @@ public class PlayerLife : MonoBehaviour
 
     private void GameOver()
     {
-        resetLives();
         SceneManager.LoadScene(4);
     }
 
-    public void resetLives()
+    public static void resetLives()
     {
         lives = MAX_LIVES;
     }

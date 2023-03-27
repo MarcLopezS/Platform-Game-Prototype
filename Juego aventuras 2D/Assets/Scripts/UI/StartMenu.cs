@@ -7,6 +7,7 @@ public class StartMenu : MonoBehaviour
 {
     public void StartGame()
     {
+        PlayerLife.resetLives();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
