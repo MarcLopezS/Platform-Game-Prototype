@@ -49,6 +49,12 @@ public class Enemy : MonoBehaviour
             Debug.Log("Frozen");
             Frozen();
             changeFrozenSprite();
+            switch (ai_state)
+            {
+                case AIState.Dead:
+                    DeadUpdate();
+                    break;
+            }
         }
             
     }
@@ -104,7 +110,11 @@ public class Enemy : MonoBehaviour
 
     IEnumerator resetEnemyState(float time)
     {
-        yield return new WaitForSeconds(time);
+        if (ai_state != AIState.Dead)
+        {
+            yield return new WaitForSeconds(time);
+        }
+        
         returnNormalSprite();
         enemyState = state.Normal;
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;

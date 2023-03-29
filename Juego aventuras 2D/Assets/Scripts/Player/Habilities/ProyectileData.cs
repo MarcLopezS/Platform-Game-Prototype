@@ -9,6 +9,7 @@ public class ProyectileData : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] public AudioSource audioImpulse;
     [SerializeField] AudioSource audioCollision;
+    [SerializeField] AudioSource audioFrozenEnemy;
 
     Animator anim;
     Rigidbody2D rb;
@@ -67,11 +68,13 @@ public class ProyectileData : MonoBehaviour
             {
                 case ProyectileType.Ice:
                     collision.gameObject.GetComponent<Slime>().enemyState = Enemy.state.Frozen;
+                    audioFrozenEnemy.Play();
                     break;
             }   
             
         }
         audioCollision.Play();
+        
         Destroy(gameObject, destroyClip.length);
     }
 

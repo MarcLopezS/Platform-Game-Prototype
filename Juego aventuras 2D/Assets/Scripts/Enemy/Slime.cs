@@ -7,12 +7,15 @@ public class Slime : Enemy
     [SerializeField] GameObject player;
     [SerializeField] float distanceDetection;
     [SerializeField] Sprite[] frozenSpriteArray;
-    float speedBouncePlayer;
-    SpriteRenderer sp2d;
-    Animator anim;
-    float timeAnimation;
+    [SerializeField] AudioSource frozenSlimeSound;
 
     Rigidbody2D slimeRB;
+    SpriteRenderer sp2d;
+    Animator anim;
+
+    float timeAnimation;
+    float speedBouncePlayer;
+    
     
 
     private void Start()
@@ -57,24 +60,31 @@ public class Slime : Enemy
     }
 
     internal override void DeadUpdate()
-    {
+    { 
         base.DeadUpdate();
         anim.speed = prevSpeedAnimation;
-
+        Debug.Log("Muerto");
         slimeRB.constraints = RigidbodyConstraints2D.FreezeAll;
         anim.SetTrigger("death");
         gameObject.GetComponent<AudioSource>().Play();
         playerBounce(player.gameObject);
-        Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+    }
+
+    public void destroyEnemy()
+    {
+        Destroy(gameObject);
     }
 
     internal override void changeFrozenSprite()
     {
         base.changeFrozenSprite();
+        //frozenSlimeSound.Play();
         anim.speed = 0;
+        Debug.Log(ai_state);
         timeAnimation = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
         anim.Play("Freeze",0,timeAnimation);
-
+        
         //string numberNormalSprite = sp2d.sprite.name.Substring(sp2d.sprite.name.Length - 1);
         //sp2d.sprite = frozenSpriteArray[int.Parse(numberNormalSprite)];
     }
