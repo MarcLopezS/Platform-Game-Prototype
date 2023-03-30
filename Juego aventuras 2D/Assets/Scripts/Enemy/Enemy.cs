@@ -39,22 +39,17 @@ public class Enemy : MonoBehaviour
                 case AIState.Attack:
                     AttackUpdate();
                     break;
-                case AIState.Dead:
-                    DeadUpdate();
-                    break;
             }
         }
         else if (enemyState == state.Frozen)
-        {
-            Debug.Log("Frozen");
-            Frozen();
-            changeFrozenSprite();
-            switch (ai_state)
+        {   
+            if(ai_state != AIState.Dead)
             {
-                case AIState.Dead:
-                    DeadUpdate();
-                    break;
+                Debug.Log("Frozen");
+                Frozen();
+                changeFrozenSprite();
             }
+           
         }
             
     }
@@ -64,8 +59,9 @@ public class Enemy : MonoBehaviour
     virtual internal void AttackUpdate()
     {
     }
-    virtual internal void DeadUpdate()
+    virtual internal void DeadCall()
     {
+        ai_state = AIState.Dead;
     }
 
     internal void Frozen()
@@ -103,22 +99,30 @@ public class Enemy : MonoBehaviour
             default:
                 break;
         }
+            StartCoroutine(coroutineHandleState());
+           
+    }
 
+    IEnumerator coroutineHandleState()
+    {
         StartCoroutine(resetEnemyState(resetStateTime));
-            
+
+        if (ai_state == AIState.Dead)
+        {
+            StopCoroutine(resetEnemyState(resetStateTime));
+            yield return null;
+
+        }
     }
 
     IEnumerator resetEnemyState(float time)
-    {
-        if (ai_state != AIState.Dead)
-        {
-            yield return new WaitForSeconds(time);
-        }
+    { 
+        yield return new WaitForSeconds(time);
+        Debug.Log("Finished waiting");
         
         returnNormalSprite();
         enemyState = state.Normal;
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-
 
     }
 

@@ -44,7 +44,7 @@ public class Slime : Enemy
 
     internal override void AttackUpdate()
     {
-        Debug.Log("attack ");
+        //Debug.Log("attack ");
         base.AttackUpdate();
         
         float direction = player.transform.position.x - transform.position.x;
@@ -59,16 +59,15 @@ public class Slime : Enemy
             ai_state = AIState.Idle;
     }
 
-    internal override void DeadUpdate()
-    { 
-        base.DeadUpdate();
+    internal override void DeadCall()
+    {
+        base.DeadCall();
+        playerBounce(player.gameObject);
+        gameObject.GetComponent<AudioSource>().Play();
         anim.speed = prevSpeedAnimation;
         Debug.Log("Muerto");
         slimeRB.constraints = RigidbodyConstraints2D.FreezeAll;
         anim.SetTrigger("death");
-        gameObject.GetComponent<AudioSource>().Play();
-        playerBounce(player.gameObject);
-        //Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
     public void destroyEnemy()
@@ -81,7 +80,7 @@ public class Slime : Enemy
         base.changeFrozenSprite();
         //frozenSlimeSound.Play();
         anim.speed = 0;
-        Debug.Log(ai_state);
+        //Debug.Log(ai_state);
         timeAnimation = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
         anim.Play("Freeze",0,timeAnimation);
         
@@ -99,7 +98,7 @@ public class Slime : Enemy
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            DeadUpdate();
+            DeadCall();
         }
     }
 
