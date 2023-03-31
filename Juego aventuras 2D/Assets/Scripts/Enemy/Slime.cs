@@ -15,8 +15,8 @@ public class Slime : Enemy
 
     float timeAnimation;
     float speedBouncePlayer;
-    
-    
+
+
 
     private void Start()
     {
@@ -31,6 +31,10 @@ public class Slime : Enemy
     internal override void stateMachine()
     {
         base.stateMachine();
+        if(WeakPointDetected())
+        {
+            DeadCall();
+        }
     }
 
     internal override void IdleUpdate()
@@ -46,13 +50,13 @@ public class Slime : Enemy
     {
         //Debug.Log("attack ");
         base.AttackUpdate();
-        
+
         float direction = player.transform.position.x - transform.position.x;
-        
+
         sp2d.flipX = direction > 0f ? true : false;
-        
-        direction = Mathf.Clamp(direction,-1,1);
-        slimeRB.velocity = new Vector2(direction * getSpeed(), slimeRB.velocity.y);  
+
+        direction = Mathf.Clamp(direction, -1, 1);
+        slimeRB.velocity = new Vector2(direction * getSpeed(), slimeRB.velocity.y);
 
 
         if (Vector2.Distance(transform.position, player.transform.position) >= distanceDetection)
@@ -82,8 +86,8 @@ public class Slime : Enemy
         anim.speed = 0;
         //Debug.Log(ai_state);
         timeAnimation = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        anim.Play("Freeze",0,timeAnimation);
-        
+        anim.Play("Freeze", 0, timeAnimation);
+
         //string numberNormalSprite = sp2d.sprite.name.Substring(sp2d.sprite.name.Length - 1);
         //sp2d.sprite = frozenSpriteArray[int.Parse(numberNormalSprite)];
     }
@@ -94,13 +98,13 @@ public class Slime : Enemy
         anim.speed = prevSpeedAnimation;
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+   /* private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
             DeadCall();
         }
-    }
+    }*/
 
     public void playerBounce(GameObject player)
     {
@@ -108,4 +112,19 @@ public class Slime : Enemy
         player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, speedBouncePlayer);
     }
 
+    public bool WeakPointDetected()
+    {
+        Vector2 raycastPos = new Vector2(transform.position.x,transform.position.y) + Vector2.up*1f;
+        float distance = 0.5f;
+        RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector2.up , distance);
+        Debug.DrawRay(raycastPos,Vector2.up * distance, Color.red);
+
+        if (hit.collider != null && hit.transform.CompareTag("Player"))
+        {
+            Debug.Log("WEAKPOINT HIT");
+            return true;
+        }
+
+        return false;
+    }
 }

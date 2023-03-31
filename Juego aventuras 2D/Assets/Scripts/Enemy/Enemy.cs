@@ -120,9 +120,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(time);
         Debug.Log("Finished waiting");
         
-        returnNormalSprite();
-        enemyState = state.Normal;
-        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        if(ai_state != AIState.Dead)
+        {
+            returnNormalSprite();
+            enemyState = state.Normal;
+            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        }
 
     }
 
